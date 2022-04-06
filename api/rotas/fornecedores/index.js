@@ -3,6 +3,13 @@ const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor
 
+roteador.options('/', (requisicao, resposta) => {
+    resposta.set ('Acess-Control-Allow-Origin', 'GET, POST')
+    resposta.set ('Acess-Control-Allow-Headers', 'Content-Type')
+    resposta.status(204)
+    resposta.end()  
+})
+
 roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar()
     resposta.status(200)
@@ -29,6 +36,13 @@ roteador.post('/', async (requisicao, resposta, proximo) => {
     } catch (erro) {
         proximo(erro)
     }
+})
+
+roteador.options('/idFornecedor', (requisicao, resposta) => {
+    resposta.set ('Acess-Control-Allow-Origin', 'GET, POST,  PUT, DELETE')
+    resposta.set ('Acess-Control-Allow-Headers', 'Content-Type')
+    resposta.status(204)
+    resposta.end()  
 })
 
 roteador.get('/:idFornecedor', async (requisicao, resposta, proximo) => {
